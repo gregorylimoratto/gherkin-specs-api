@@ -1,6 +1,6 @@
 {
   "name": "gherkin-specs-api",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "description": "javascript api that use gherkin syntaxe to write tests",
   "main": "lib/gherkin-specs-api.js",
   "keywords": [
