@@ -64,7 +64,6 @@ module.exports = function(grunt) {
       }
     },
     'npm-publish':{
-      
         abortIfDirty: false
     }
   });
