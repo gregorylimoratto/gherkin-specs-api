@@ -45,6 +45,7 @@ FeatureRunner.prototype.run = function () {
 
 FeatureRunner.prototype.runFeature = function (feature) {
 	var self = this;
+	if (!this.featuresImplementations) { throw new Error("No feature specs implemented, implements scenarios with featureSteps(...).given(...).when(...).then(...)...")}
 	var featureStepsDefinition = this.featuresImplementations.getMatchingFeatureStepsDefinition(feature);
 
 	describe('\nFeature: ' + feature.description, function () {
