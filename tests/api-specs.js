@@ -22,30 +22,30 @@ feature('jasmine-cucumber: Should use regexp to find matchable steps')
 			.ignore()
 			.given('This step result in an error')
 			.then('As it is ignored, it shall not be run (xdescribe)');
-// 
-// featureSteps("jasmine-cucumber: Should use (.*) to find matchable steps")
-// 	.given('enqueue "(.*)"', function(num){
-// 		this.inputs = this.inputs || []; 
-// 		this.inputs.push(num);
-// 	})
-// 	.when('enqueue "(.*)"', function(num){
-// 		this.inputs = this.inputs || []; 
-// 		this.inputs.push(num);
-// 	})
-// 	.then('should be "(.*)"', function(str){ 
-// 		expect(this.inputs.join(',')).toBe(str); 
-// 	});
-// 		
-// featureSteps('jasmine-cu')
-// 	.given('I have two persons', function(persons){
-// 		this.persons = persons;
-// 	})
-// 	.when('I remove the first one', function(){
-// 		this.persons.splice(0,1);
-// 	})
-// 	.then('I have just one person', function(person){
-// 		expect(this.persons[0]).toEqual(person);
-// 	});
-// 	
+
+featureSteps("jasmine-cucumber: Should use (.*) to find matchable steps")
+	.given('enqueue "(.*)"', function(num){
+		this.inputs = this.inputs || []; 
+		this.inputs.push(num);
+	})
+	.when('enqueue "(.*)"', function(num){
+		this.inputs = this.inputs || []; 
+		this.inputs.push(num);
+	})
+	.then('should be "(.*)"', function(str){ 
+		expect(this.inputs.join(',')).toBe(str); 
+	});
+		
+featureSteps('jasmine-cu')
+	.given('I have two persons', function(persons){
+		this.persons = persons;
+	})
+	.when('I remove the first one', function(){
+		this.persons.splice(0,1);
+	})
+	.then('I have just one person', function(person){
+		expect(this.persons[0]).toEqual(person);
+	});
+	
 featureRunner().run();
 		
