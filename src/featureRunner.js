@@ -58,6 +58,7 @@ FeatureRunner.prototype.runFeature = function (feature) {
 FeatureRunner.prototype.runScenario = function (scenario, featureStepsDefinition) {
 	var ignoreScenario = scenario.isIgnored;
 	if (!ignoreScenario && !scenario.excludeOthers) {
+		console.log("scenar : ", this.features);
 		ignoreScenario = this.features.some(function (feature) {
 			return feature.scenarios.some(function (scenar) {
 				return scenar.excludeOthers;
