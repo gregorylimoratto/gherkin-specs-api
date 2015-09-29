@@ -5,7 +5,6 @@
 /* global featureSteps */
 /* jshint globalstrict: true */
 
-/* This is how preprocessor transform Gherkin File.feature */
 'use strict';
 feature('jasmine-cucumber: Should use regexp to find matchable steps') 
 		.scenario('can call when after then')
