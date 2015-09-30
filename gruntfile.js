@@ -79,5 +79,5 @@ module.exports = function(grunt) {
   grunt.registerTask('debug',  ['concat', 'karma']); // ,
   
   grunt.registerTask('default',  ['uglify', 'karma']); // , 
-  grunt.registerTask('release',  ['uglify', 'npm-publish']);
+  grunt.registerTask('release',  ['uglify', 'karma', 'npm-publish']);
 };
