@@ -100,9 +100,18 @@ FeatureRunner.prototype.runSteps = function (scenario, featureStepsDefinition) {
 			})
 			// if the flow was async, then the test is done when all promises are done
 			if (delegatePromise) {
-				delegatePromise.then(function () {
-					done();
-				});
+				delegatePromise
+					.then(done)
+					.catch(function(err){
+						// catch promises errors if an assert is made in the flow and is in error
+						if (err instanceof Error){
+							done(err);
+						}else{
+							// promise rejection that are not error and are not catch are errors !
+							var error = JSON.stringify(err, undefined, 4);
+							done(new Error(error));
+						}
+					});
 			} else {
 				done();
 			}
