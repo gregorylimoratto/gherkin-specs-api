@@ -81,6 +81,8 @@ FeatureRunner.prototype.runSteps = function (scenario, featureStepsDefinition) {
 	var scenarioContext = {};
 	return function () {
 		it(description, function (done) {
+			var fail = done.fail || done;
+			
 			var delegatePromise;
 			scenarioExecutableSteps.forEach(function (executable) {
 				// if the previous step return a promise, we have to chain other steps on this promise.				
@@ -101,15 +103,14 @@ FeatureRunner.prototype.runSteps = function (scenario, featureStepsDefinition) {
 			// if the flow was async, then the test is done when all promises are done
 			if (delegatePromise) {
 				delegatePromise
-					.then(done)
-					.catch(function(err){
+					.then(done, function(err){
 						// catch promises errors if an assert is made in the flow and is in error
 						if (err instanceof Error){
-							done(err);
+							fail(err);
 						}else{
 							// promise rejection that are not error and are not catch are errors !
 							var error = JSON.stringify(err, undefined, 4);
-							done(new Error(error));
+							fail(new Error(error));
 						}
 					});
 			} else {
