@@ -32,20 +32,25 @@ function logBeforeRun(featureRunner) {
 
 function FeatureRunner() {
 	this.features = [];
-	this.featuresImplementations = null;
+	this.featuresImplementations = new FeaturesImplementations();
+	this.hasRun = false;
+	this.missingSteps = {};
+	this.logger = new FeatureRunnerLogger();
 }
 
 FeatureRunner.prototype.run = function () {
 	logBeforeRun(this);
 	var self = this;
+	this.hasRun = true;
 	this.features.forEach(function (feature) {
 		self.runFeature(feature);
 	});
+	this.logger.logMissingSteps(this.missingSteps);
 };
 
 FeatureRunner.prototype.runFeature = function (feature) {
 	var self = this;
-	if (!this.featuresImplementations) { throw new Error("No feature specs implemented, implements scenarios with featureSteps(...).given(...).when(...).then(...)...")}
+	
 	var featureStepsDefinition = this.featuresImplementations.getMatchingFeatureStepsDefinition(feature);
 
 	describe('\nFeature: ' + feature.description, function () {
@@ -121,6 +126,7 @@ FeatureRunner.prototype.runSteps = function (scenario, featureStepsDefinition) {
 };
 
 FeatureRunner.prototype.extractExecutableSteps = function (scenario, featureStepsDefinition) {
+	var self = this;
 	var beforeSteps = featureStepsDefinition.beforeSteps.map(function (definition) {
 		return createRunnableStep(function (scenarioContext) {
 			definition.apply(scenarioContext);
@@ -133,6 +139,9 @@ FeatureRunner.prototype.extractExecutableSteps = function (scenario, featureStep
 	});
 	var runnableSteps = scenario.steps.map(function (step) {
 		var stepToRun = featureStepsDefinition.getStep(step);
+		if (!stepToRun) {
+			return self.addMissingStep(scenario.feature.description, step);
+		}
 		return createRunnableStep(stepToRun, step.stringify());
 	});
 	var scenarioExecutableSteps = [].concat(beforeSteps)
@@ -141,3 +150,8 @@ FeatureRunner.prototype.extractExecutableSteps = function (scenario, featureStep
 	return scenarioExecutableSteps;
 };
 
+FeatureRunner.prototype.addMissingStep = function (featureDesc, step) {
+	this.missingSteps[featureDesc] = this.missingSteps[featureDesc] || [];
+	this.missingSteps[featureDesc].push(step);
+	return createRunnableStep(function(){}, step.stringify());
+}

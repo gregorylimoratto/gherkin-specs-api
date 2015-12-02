@@ -7,30 +7,28 @@
 (function (exports) {
 	'use strict';
 
-	var runner;
-	var features = [];
-	var featuresImplementations;
-
+	var runner = null;
+	function getFeatureRunner(){
+		if (!runner || runner.hasRun){ runner = new FeatureRunner(); }
+		return runner;
+	}
+	
 	function getApiInterface() {
 		return {
 			"feature": function (description) {
 				var feature = new Feature(description);
-				features.push(feature);
+				getFeatureRunner().features.push(feature);
 				return feature;
 			},
 			"featureSteps": function (featurePattern) {
-				featuresImplementations = featuresImplementations || new FeaturesImplementations();
-				return featuresImplementations.addFeature(featurePattern);
+				return getFeatureRunner().featuresImplementations.addFeature(featurePattern);
 			},
 			"featureRunner": function () {
-				runner = runner || new FeatureRunner();
-				runner.features = features;
-				runner.featuresImplementations = featuresImplementations;
-				return runner;
+				return getFeatureRunner();
 			}
 		};
 	}
-
+	
 	var apiInterface = getApiInterface();
 	exports = exports || {};
 	for (var property in apiInterface) {

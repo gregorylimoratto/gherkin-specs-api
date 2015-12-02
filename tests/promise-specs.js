@@ -39,4 +39,3 @@ featureSteps(/Simple promise tests/)
 	});
 	
 featureRunner().run();
-

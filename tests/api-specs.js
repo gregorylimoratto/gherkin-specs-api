@@ -34,10 +34,12 @@ featureSteps("jasmine-cucumber: Should use (.*) to find matchable steps")
 	.then('should be "(.*)"', function(str){ 
 		expect(this.inputs.join(',')).toBe(str); 
 	});
-		
+
+var nbRuns = 0;
 featureSteps('jasmine-cu')
 	.given('I have two persons', function(persons){
 		this.persons = persons;
+		nbRuns++;
 	})
 	.when('I remove the first one', function(){
 		this.persons.splice(0,1);
@@ -47,4 +49,10 @@ featureSteps('jasmine-cu')
 	});
 	
 featureRunner().run();
-		
+
+describe("feature runner",function(){
+	featureRunner().run(); 
+	it("should run tests once", function(){
+		expect(nbRuns).toBe(1);
+	});
+});
