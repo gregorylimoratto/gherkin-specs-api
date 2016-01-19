@@ -41,4 +41,9 @@
 			'\t |  Lana |   2 | ');
 		});
 		
+        
+        it('Should stringify step with docString parameter', function(){
+            var result = new StepParser("Given", "a document", "multi\nligne\ndocument").stringify();
+            expect(result).toBe('Given a document\n'+"multi\nligne\ndocument")
+        })
 	});

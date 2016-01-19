@@ -37,28 +37,34 @@ StepParser.prototype.formatParameter = function (key, value) {
 
 StepParser.prototype.stringify = function () {
 	var stepFullDescription = this.keyWord + " " + this.description;
-	if (this.parameters && typeof this.parameters === "object") {
+
+	if (this.parameters) {
 		stepFullDescription += this.stringifyParams();
 	}
 	return stepFullDescription;
 };
 
 StepParser.prototype.stringifyParams = function () {
-	var stepParams = StepParser.NewLine;
-	var paramKeys = this.getParametersNames();
+	var stepParams = '\n';
+    
+    if (typeof this.parameters === "object"){
+        stepParams = StepParser.NewLine;
+        var paramKeys = this.getParametersNames();
 
-	var self = this;
-	paramKeys.forEach(function (key) {
-		stepParams += self.formatParameter(key, key);
-	});
+        var self = this;
+        paramKeys.forEach(function (key) {
+            stepParams += self.formatParameter(key, key);
+        });
 
-	this.parameters.forEach(function (param) {
-		stepParams += StepParser.NewLine;
-		paramKeys.forEach(function (key) {
-			stepParams += self.formatParameter(key, param[key]);
-		});
-	});
-
+        this.parameters.forEach(function (param) {
+            stepParams += StepParser.NewLine;
+            paramKeys.forEach(function (key) {
+                stepParams += self.formatParameter(key, param[key]);
+            });
+        });
+    } else {
+      stepParams += this.parameters;  
+    }
 	return stepParams;
 };
 
