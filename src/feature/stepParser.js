@@ -6,10 +6,11 @@ function StepParser(keyWord, description, parameters) {
 	this.description = description;
 
 	this.parameters = parameters ? parameters : null;
-
-	if (this.parameters && !Array.isArray(this.parameters)) {
-		this.parameters = [this.parameters];
-	}
+    if (typeof this.parameters === "object"){
+        if (this.parameters && !Array.isArray(this.parameters)) {
+            this.parameters = [this.parameters];
+        }
+    }
 }
 
 StepParser.NewLine = '\n\t | ';
@@ -36,8 +37,7 @@ StepParser.prototype.formatParameter = function (key, value) {
 
 StepParser.prototype.stringify = function () {
 	var stepFullDescription = this.keyWord + " " + this.description;
-
-	if (this.parameters) {
+	if (this.parameters && typeof this.parameters === "object") {
 		stepFullDescription += this.stringifyParams();
 	}
 	return stepFullDescription;
@@ -45,7 +45,6 @@ StepParser.prototype.stringify = function () {
 
 StepParser.prototype.stringifyParams = function () {
 	var stepParams = StepParser.NewLine;
-
 	var paramKeys = this.getParametersNames();
 
 	var self = this;

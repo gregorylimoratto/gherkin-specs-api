@@ -11,6 +11,7 @@
 /* jshint globalstrict: true */
 'use strict';
 function createRunnableStep(delegate, description) {
+	
 	return {
 		description: description,
 		step: function (scenarioContext) {
@@ -140,7 +141,7 @@ FeatureRunner.prototype.extractExecutableSteps = function (scenario, featureStep
 	var runnableSteps = scenario.steps.map(function (step) {
 		var stepToRun = featureStepsDefinition.getStep(step);
 		if (!stepToRun) {
-			return self.addMissingStep(scenario.feature.description, step);
+			self.addMissingStep(scenario.feature.description, step);
 		}
 		return createRunnableStep(stepToRun, step.stringify());
 	});
@@ -153,5 +154,4 @@ FeatureRunner.prototype.extractExecutableSteps = function (scenario, featureStep
 FeatureRunner.prototype.addMissingStep = function (featureDesc, step) {
 	this.missingSteps[featureDesc] = this.missingSteps[featureDesc] || [];
 	this.missingSteps[featureDesc].push(step);
-	return createRunnableStep(function(){}, step.stringify());
 }

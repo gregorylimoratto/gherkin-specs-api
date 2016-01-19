@@ -20,13 +20,25 @@ feature('jasmine-cucumber: Should use regexp to find matchable steps')
 		.scenario('this one should be ignored')
 			.ignore()
 			.given('This step result in an error')
-			.then('As it is ignored, it shall not be run (xdescribe)');
+			.then('As it is ignored, it shall not be run (xdescribe)')
+        .scenario('can contains doc strings')
+            .given('a blog post named "Random" with Markdown body', "Some Title, Eh?\n"+
+  "===============\n"+
+  "Here is the first paragraph of my blog post. Lorem ipsum dolor sit amet,\n"+
+  "consectetur adipiscing elit.");
 
 featureSteps("jasmine-cucumber: Should use (.*) to find matchable steps")
 	.given('enqueue "(.*)"', function(num){
 		this.inputs = this.inputs || []; 
 		this.inputs.push(num);
 	})
+    .given('a blog post named "(.*)" with Markdown body', function(param1, docString){
+        expect(param1).toBe("Random")
+        expect(docString).toBe("Some Title, Eh?\n"+
+  "===============\n"+
+  "Here is the first paragraph of my blog post. Lorem ipsum dolor sit amet,\n"+
+  "consectetur adipiscing elit.");
+    })
 	.when('enqueue "(.*)"', function(num){
 		this.inputs = this.inputs || []; 
 		this.inputs.push(num);

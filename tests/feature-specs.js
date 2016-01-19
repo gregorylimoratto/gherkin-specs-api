@@ -7,7 +7,12 @@
 /* jshint globalstrict: true */
 
 'use strict';
+
 describe('Feature',function(){
+	beforeEach(function(){
+		var runner = featureRunner();
+		runner.features = [];
+	})
 	it('should allow feature fluent declaration', function() {
 		var feat = feature('jasmine-cucumber: Should support any order');
 		feat
@@ -44,6 +49,8 @@ describe("Not implemented feature", function(){
 	}
 	
 	beforeEach(function(){
+		runner = featureRunner();
+		runner.features = [];
 		feature('not implemented feature') 
 			.scenario('A scenario that is not implemented')
 				.given('A given')
@@ -73,3 +80,4 @@ describe("Not implemented feature", function(){
 		expect(messages[0]).toBe(expectedLog);
 	});
 });
+
