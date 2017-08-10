@@ -36,4 +36,5 @@
 			exports[property] = apiInterface[property];
 		}
 	}
-})(typeof window !== 'undefined' ? window : module.exports);
+})(typeof module !== "undefined" &&
+    module.exports ? module.exports : window);

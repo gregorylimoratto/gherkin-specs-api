@@ -4,5 +4,5 @@
 	"files.exclude": {
 		"**/.git": false
     },
-    "vsicons.presets.angular": true
+    "vsicons.presets.angular": false
 }
