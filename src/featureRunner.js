@@ -72,7 +72,7 @@ FeatureRunner.prototype.runScenario = function (scenario, featureStepsDefinition
 	}
 
 	// TODO : Extract describe / it func in config so we can switch to any test framework	
-	var globalObj = (typeof module !== "undefined" && module.exports ? module.exports : window); // global for node else, window
+	var globalObj = (typeof module !== "undefined" && module.exports ? global : window); // global for node else, window
 	var describe = ignoreScenario ? globalObj.xdescribe : globalObj.describe;
 	describe('\n\nScenario: ' + scenario.description, this.runSteps(scenario, featureStepsDefinition));
 };
